@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>QUnit Test</title>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.17.1.css">
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+		<script src="http://code.jquery.com/qunit/qunit-1.17.1.js"></script>
+		<script src="vRaptorSerialize.js"></script>
+		<script>
+		
+			QUnit.test("single field object test", function( assert ) {
+	  
+				var object = {"name": "Maison"};
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison";
+
+				assert.equal(result, expected, "Passed!" );
+			});
+
+			QUnit.test("multiple field object test", function( assert ) {
+			  
+				var object = {"name": "Maison", "age": 26};
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison&test.age=26";
+
+				assert.equal(result, expected, "Passed!" );
+			});
+
+			QUnit.test("sub object field object test", function( assert ) {
+			  
+				var object = {"name": "Maison", "age": 26, "pet":{"name": "Pitucha"} };
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison&test.age=26&test.pet.name=Pitucha";
+
+				assert.equal(result, expected, "Passed!" );
+			});
+
+			QUnit.test("list field object test", function( assert ) {
+			  
+				var object = {"name": "Maison", "age": 26, "phone":[{"tel": "3391-4017"}, {"tel": "9646-9983"}] };
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison&test.age=26&test.phone[0].tel=3391-4017&test.phone[1].tel=9646-9983";
+
+				assert.equal(result, expected, "Passed!" );
+			});
+			
+			QUnit.test("complex object test", function( assert ) {
+			  
+				var object = {"name": "Maison", "age": 26, "pet":{"name": "Pitucha", "type": "dog"}, "phone":[{"tel": "3391-4017"}, {"tel": "9646-9983"}] };
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison&test.age=26&test.pet.name=Pitucha&test.pet.type=dog&test.phone[0].tel=3391-4017&test.phone[1].tel=9646-9983";
+
+				assert.equal(result, expected, "Passed!" );
+			});
+		
+		</script>
+	</body>
+</html>

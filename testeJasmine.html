@@ -1,0 +1,76 @@
+<html>
+	<head>
+	
+		<title>Jasmine Test</title>
+		
+		<link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-core/jasmine_favicon.png">
+		<link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-core/jasmine.css">
+
+		<script type="text/javascript" src="jasmine/lib/jasmine-core/jasmine.js"></script>
+		<script type="text/javascript" src="jasmine/lib/jasmine-core/jasmine-html.js"></script>
+		<script type="text/javascript" src="jasmine/lib/jasmine-core/boot.js"></script>
+	</head>
+	<body>
+	<script src="vRaptorSerialize.js"></script>
+	<script>
+		
+		describe("vRaptorSerialize", function() {
+			it("should serialize single field object", function() {
+				var object = {"name": "Maison"};
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison";
+
+				expect(result).toBe(expected);
+			});
+			
+			it("should serialize multiple fields object", function() {
+		  
+				var object = {"name": "Maison", "age": 26};
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison&test.age=26";
+
+				expect(result).toBe(expected);
+			});
+
+			it("should serialize a object with sub object field", function() {
+			  
+				var object = {"name": "Maison", "age": 26, "pet":{"name": "Pitucha"} };
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison&test.age=26&test.pet.name=Pitucha";
+
+				expect(result).toBe(expected);
+			});
+
+			it("should serialize a object with list field", function() {
+			  
+				var object = {"name": "Maison", "age": 26, "phone":[{"tel": "3391-4017"}, {"tel": "9646-9983"}] };
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison&test.age=26&test.phone[0].tel=3391-4017&test.phone[1].tel=9646-9983";
+
+				expect(result).toBe(expected);
+			});
+			
+			it("should serialize a complex object", function() {
+			  
+				var object = {"name": "Maison", "age": 26, "pet":{"name": "Pitucha", "type": "dog"}, "phone":[{"tel": "3391-4017"}, {"tel": "9646-9983"}] };
+				var objectName = "test";
+
+				var result = vRaptorSerialize(object, objectName);
+				var expected = "test.name=Maison&test.age=26&test.pet.name=Pitucha&test.pet.type=dog&test.phone[0].tel=3391-4017&test.phone[1].tel=9646-9983";
+
+				expect(result).toBe(expected);
+			});
+			
+		});
+				
+	</script>
+	</body>
+</html>
